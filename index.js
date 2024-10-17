@@ -36,7 +36,6 @@ const express = require("express");
 const app = express();
 const port = process.env.PORT || 8000;
 
-//=============================================
 
 async function connectToWA() {
 console.log("Connecting wa bot 🧬...");
@@ -46,13 +45,12 @@ var { version } = await fetchLatestBaileysVersion()
 const conn = makeWASocket({
         logger: P({ level: 'silent' }),
         printQRInTerminal: false,
-        browser: Browsers.macOS("Firefox"),
+        browser: Browsers.macOS("chrome"),
         syncFullHistory: true,
         auth: state,
         version
         })
-    
-conn.ev.on('connection.update', (update) => {
+    conn.ev.on('connection.update', (update) => {
 const { connection, lastDisconnect } = update
 if (connection === 'close') {
 if (lastDisconnect.error.output.statusCode !== DisconnectReason.loggedOut) {
@@ -72,7 +70,6 @@ console.log('Bot connected to whatsapp ✅')
 let up = `Wa-BOT connected successful ✅\n\nPREFIX: ${prefix}`;
 
 conn.sendMessage(ownerNumber + "@s.whatsapp.net", { image: { url: `https://telegra.ph/file/900435c6d3157c98c3c88.jpg` }, caption: up })
-
 }
 })
 conn.ev.on('creds.update', saveCreds)  
